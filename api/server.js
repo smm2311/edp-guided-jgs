@@ -12,9 +12,6 @@ const port = 3000; // You can choose any port number
 const mongodb_url = process.env.MONGO_URL;
 const mongodb_name = process.env.MONGO_DB;
 
-console.log(mongodb_url)
-console.log(mongodb_name)
-
 // Create a GET route for /api/planets
 app.get('/api/planets', async (req, res) => {
 
@@ -49,6 +46,79 @@ app.get('/api/planets/:id', async (req, res) => {
         await client.close();
     }
 
+});
+
+app.get('/api/characters/:id/films', async (req, res) => {
+
+    let client;
+
+    try {
+        client= await MongoClient.connect(mongodb_url);
+        const db = client.db(mongodb_name);
+        const collection = db.collection("films_characters");
+        const filmCollection = db.collection("films");
+
+        const filmIds = (await collection.find({character_id: +req.params.id}).toArray()).map(data => data['film_id']);
+
+        let films = []
+        for (const filmId of filmIds) {
+            const filmData = await filmCollection.findOne({id: filmId});
+            films.push(filmData);
+        }
+
+        res.json(films);
+    } catch (err) {
+        console.error(err);
+    } finally {
+        await client.close();
+    }
+
+});
+
+app.get('/api/planets/:id/films', async (req, res) => {
+
+    let client;
+
+    try {
+        client= await MongoClient.connect(mongodb_url);
+        const db = client.db(mongodb_name);
+        const collection = db.collection("films_planets");
+        const filmCollection = db.collection("films");
+
+        const filmIds = (await collection.find({planet_id: +req.params.id}).toArray()).map(data => data['film_id']);
+
+        let films = []
+        for (const filmId of filmIds) {
+            const filmData = await filmCollection.findOne({id: filmId});
+            films.push(filmData);
+        }
+
+        res.json(films);
+    } catch (err) {
+        console.error(err);
+    } finally {
+        await client.close();
+    }
+
+});
+
+app.get('/api/planets/:id/characters', async (req, res) => {
+
+    let client;
+
+    try {
+        client= await MongoClient.connect(mongodb_url);
+        const db = client.db(mongodb_name);
+        const collection = db.collection("characters");
+        const characters = (await collection.find({homeworld: +req.params.id}).toArray());
+
+        res.json(characters);
+
+    } catch (err) {
+        console.error(err);
+    } finally {
+        await client.close();
+    }
 });
 
 // Start the server
