@@ -33,6 +33,61 @@ app.get('/api/planets', async (req, res) => {
     }
 });
 
+
+app.get('/api/characters', async (req, res) => {
+
+    let client;
+
+    try {
+        client= await MongoClient.connect(mongodb_url);
+        const db = client.db(mongodb_name);
+        const collection = db.collection("characters");
+        const characters = await collection.find().toArray();
+        res.json(characters);
+    } catch (err) {
+        console.error(err);
+    } finally {
+        await client.close();
+    }
+});
+
+
+app.get('/api/films', async (req, res) => {
+
+    let client;
+
+    try {
+        client= await MongoClient.connect(mongodb_url);
+        const db = client.db(mongodb_name);
+        const collection = db.collection("films");
+        const films = await collection.find().toArray();
+        res.json(films);
+    } catch (err) {
+        console.error(err);
+    } finally {
+        await client.close();
+    }
+});
+
+app.get('/api/characters/:id', async (req, res) => {
+
+    let client;
+
+    try {
+        client= await MongoClient.connect(mongodb_url);
+        const db = client.db(mongodb_name);
+        const collection = db.collection("characters");
+        const character = await collection.findOne({id: +req.params.id});
+        res.json(character);
+    } catch (err) {
+        console.error(err);
+    } finally {
+        await client.close();
+    }
+
+});
+
+
 app.get('/api/planets/:id', async (req, res) => {
 
     let client;
