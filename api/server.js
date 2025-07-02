@@ -127,7 +127,6 @@ app.get('/api/films/:id/characters', async (req, res) => {
         let collection = db.collection("films_characters");
         const characters = await collection.find({film_id: +req.params.id}).toArray();
         const character_ids = characters.map(c => c.character_id);
-        console.log(character_ids);
         // map character ids to character names
         collection = db.collection("characters");
         const character_names = await Promise.all(character_ids.map(async (cid) => {
