@@ -150,17 +150,17 @@ app.get('/api/films/:id/planets', async (req, res) => {
         client= await MongoClient.connect(mongodb_url);
         const db = client.db(mongodb_name);
         let collection = db.collection("films_planets");
-        const planets = await collection.find({film_id: +req.params.id}).toArray();
+        let planets = await collection.find({film_id: +req.params.id}).toArray();
         const planet_ids = planets.map(p => p.planet_id);
 
         // map character ids to character names
         collection = db.collection("planets");
-        const planet_names = await Promise.all(planet_ids.map(async (pid) => {
+        planets = await Promise.all(planet_ids.map(async (pid) => {
 
             const planet = await collection.findOne({id: pid});
-            return planet.name;
+            return planet;
         }));
-        res.json(planet_names);
+        res.json(planets);
     } catch (err) {
         console.error(err);
     } finally {
