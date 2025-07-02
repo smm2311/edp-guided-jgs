@@ -1,27 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useData } from "../hooks/DataContext";
 
 export function Films() {
-  const [films, setFilms] = useState([]);
 
-  async function fetchFilms() {
-    try {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL_BASE}/films`
-      );
-      if (!res.ok) {
-        throw new Error("api messed up");
-      }
-      const res_json = await res.json();
-      setFilms(res_json);
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  useEffect(() => {
-    fetchFilms();
-  }, []);
+  const {characters, planets, films} = useData();
 
   return (
     <>
