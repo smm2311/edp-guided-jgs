@@ -3,11 +3,14 @@
 import express from "express";
 import {MongoClient} from 'mongodb';
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
 const port = 3000;
+
+app.use(cors());
 
 const mongodb_url = process.env.MONGO_URL;
 const mongodb_name = process.env.MONGO_DB;
