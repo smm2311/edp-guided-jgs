@@ -50,7 +50,7 @@ export function Film () {
     
     return (
         <>
-            <h1>{info.name}</h1>
+            <h1>{info.title}</h1>
 
             <h2>Properties</h2>
             {Object.entries(info).map(([key, value]) => <p key={key}> {key.toUpperCase()}: {value}</p>)}
