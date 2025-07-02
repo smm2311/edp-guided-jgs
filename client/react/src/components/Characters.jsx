@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Character } from "./Character";
 import { Link } from "react-router-dom";
 
 export function Characters() {
@@ -15,7 +14,6 @@ export function Characters() {
       }
       const res_json = await res.json();
       setCharacters(res_json);
-      console.log(res_json);
     } catch (err) {
       console.error(err);
     }
@@ -29,12 +27,7 @@ export function Characters() {
     <>
       {characters.map((character) => (
         <div key={character.name}>
-          <Link
-            to={{
-              pathname: `/character/${character.id}`,
-              state: { "info": character },
-            }}
-          >
+          <Link to={`/character/${character.id}`} state={{ info: character }}>
             {character.name}
           </Link>
           <br />
