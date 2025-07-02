@@ -128,16 +128,16 @@ app.get('/api/films/:id/characters', async (req, res) => {
         client= await MongoClient.connect(mongodb_url);
         const db = client.db(mongodb_name);
         let collection = db.collection("films_characters");
-        const characters = await collection.find({film_id: +req.params.id}).toArray();
+        let characters = await collection.find({film_id: +req.params.id}).toArray();
         const character_ids = characters.map(c => c.character_id);
-        // map character ids to character names
+        // map character ids to characters
         collection = db.collection("characters");
-        const character_names = await Promise.all(character_ids.map(async (cid) => {
+        characters = await Promise.all(character_ids.map(async (cid) => {
 
             const character = await collection.findOne({id: cid});
-            return character.name;
+            return character;
         }));
-        res.json(character_names);
+        res.json(characters);
     } catch (err) {
         console.error(err);
     } finally {
