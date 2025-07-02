@@ -7,12 +7,11 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
-const port = 3000; // You can choose any port number
+const port = 3000;
 
 const mongodb_url = process.env.MONGO_URL;
 const mongodb_name = process.env.MONGO_DB;
 
-// Create a GET route for /api/planets
 app.get('/api/planets', async (req, res) => {
 
     let client;
