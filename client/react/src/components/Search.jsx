@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function Search({ dataNames, setSearchResults }) {
+export function Search({ topic, dataNames, setSearchResults }) {
   const [searchTerm, setSearchTerm] = useState("");
 
   const filter = () => {
@@ -24,7 +24,7 @@ export function Search({ dataNames, setSearchResults }) {
       <input
         className="form-control me-2"
         type="search"
-        placeholder="Search"
+        placeholder={topic}
         aria-label="Search"
         value={searchTerm}
         onChange={handleChange}

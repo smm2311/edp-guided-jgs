@@ -26,6 +26,7 @@ export function Planets() {
   return (
     <>
       <Search
+        topic="Search Planets"
         dataNames={planets.map((c) => c.name)}
         setSearchResults={setSearchResults}
       />

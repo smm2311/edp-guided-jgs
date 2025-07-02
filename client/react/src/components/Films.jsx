@@ -26,6 +26,7 @@ export function Films() {
   return (
     <>
       <Search
+        topic="Search Films"
         dataNames={films.map((c) => c.title)}
         setSearchResults={setSearchResults}
       />

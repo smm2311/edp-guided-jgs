@@ -8,7 +8,9 @@ export function Characters() {
 
   async function fetchCharacters() {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL_BASE}/characters`);
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL_BASE}/characters`
+      );
       if (!res.ok) {
         throw new Error("api messed up");
       }
@@ -21,11 +23,12 @@ export function Characters() {
 
   useEffect(() => {
     fetchCharacters();
-  }, []); 
+  }, []);
 
   return (
     <>
       <Search
+        topic="Search Characters"
         dataNames={characters.map((c) => c.name)}
         setSearchResults={setSearchResults}
       />
